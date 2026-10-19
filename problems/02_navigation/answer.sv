@@ -1,4 +1,4 @@
-// fifo.sv - synchronous FIFO
+// fifo.sv - synchronous FIFO - reviewed
 module fifo #(
   parameter int DEPTH = 16,
   parameter int WIDTH = 8
@@ -9,11 +9,11 @@ module fifo #(
   input  logic [WIDTH-1:0] wdata,
   input  logic             rd_en,
   output logic [WIDTH-1:0] rdata,
-  output logic             full,
+  output logic             full, // set when count == DEPTH
   output logic             empty
-);
+); // port list
 
-    logic [WIDTH-1:0] mem [DEPTH];
+  logic [WIDTH-1:0] mem [DEPTH];
   logic [$clog2(DEPTH):0] count;
 
   always_ff @(posedge clk or negedge rst_n) begin
@@ -26,3 +26,4 @@ module fifo #(
   assign empty = (count == 0);
 
 endmodule
+// end of file
